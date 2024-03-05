@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>Tic Tac Toe</title>
+    <style>
+        body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    margin: 0;
+}
+
+.container {
+    text-align: center;
+}
+
+.board {
+    display: grid;
+    grid-template-columns: repeat(3, 100px);
+    grid-gap: 5px;
+    margin-top: 20px;
+}
+
+.board button {
+    font-size: 24px;
+    width: 100px;
+    height: 100px;
+}
+
+.status {
+    margin-top: 20px;
+    font-size: 18px;
+}
+
+#resetBtn {
+    margin-top: 10px;
+    font-size: 16px;
+}
+
+    </style>
+</head>
+<body>
+    <script>
+        let currentPlayer = 'X';
+        let gameBoard = ['', '', '', '', '', '', '', '', ''];
+        let gameActive = true;
+        
+        function handleCellClick(index) {
+            if (!gameActive || gameBoard[index] !== '') {
+                return;
+            }
+        
+            gameBoard[index] = currentPlayer;
+            document.getElementById('board').children[index].textContent = currentPlayer;
+        
+            if (checkWin()) {
+                document.getElementById('status').textContent = `Player ${currentPlayer} wins!`;
+                gameActive = false;
+            } else if (gameBoard.every(cell => cell !== '')) {
+                document.getElementById('status').textContent = "It's a tie!";
+                gameActive = false;
+            } else {
+                currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
+                document.getElementById('status').textContent = `Player ${currentPlayer}'s turn`;
+            }
+        }
+        
+        function checkWin() {
+            const winPatterns = [
+                [0, 1, 2], [3, 4, 5], [6, 7, 8],
+                [0, 3, 6], [1, 4, 7], [2, 5, 8],
+                [0, 4, 8], [2, 4, 6]
+            ];
+        
+            return winPatterns.some(pattern => {
+                const [a, b, c] = pattern;
+                return gameBoard[a] !== '' && gameBoard[a] === gameBoard[b] && gameBoard[a] === gameBoard[c];
+            });
+        }
+        
+        function resetGame() {
+            currentPlayer = 'X';
+            gameBoard = ['', '', '', '', '', '', '', '', ''];
+            gameActive = true;
+        
+            const cells = document.getElementById('board').children;
+        
+            for (let i = 0; i < cells.length; i++) {
+                cells[i].textContent = '';
+            }
+        
+            document.getElementById('status').textContent = "Player X's turn";
+        }
+        
+        function generateBoard() {
+            const boardContainer = document.getElementById('board');
+        
+            for (let i = 0; i < 9; i++) {
+                const cell = document.createElement('button');
+                cell.setAttribute('class', 'cell');
+                cell.addEventListener('click', () => handleCellClick(i));
+                boardContainer.appendChild(cell);
+            }
+        }
+        
+        // Call the generateBoard function when the page is loaded
+        document.addEventListener('DOMContentLoaded', generateBoard);
+    </script>
+    <div class="container">
+        <h1>Tic Tac Toe</h1>
+        <div id="board" class="board">
+            <!-- The board will be generated dynamically using JavaScript -->
+        </div>
+        <div id="status" class="status">Player X's turn</div>
+        <button id="resetBtn" onclick="resetGame()">Reset Game</button>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

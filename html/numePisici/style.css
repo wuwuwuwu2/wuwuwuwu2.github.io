@@ -1,0 +1,25 @@
+body{
+    background-color: rgb(217, 255, 127);
+}
+
+section{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding: 3vh 0;
+}
+
+section img{
+    width: 90vw;
+}
+
+@media only screen and (orientation: landscape) {
+    body {
+        background-color: lightblue;
+        display:grid;
+        grid-template-columns: 1fr 1fr 1fr;
+    }
+    section img{
+        width:30vw;
+    }
+}

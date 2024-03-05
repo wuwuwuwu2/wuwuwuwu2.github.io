@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculator</title>
+</head>
+<style>
+    body{
+        background-color: rgb(127, 255, 212);
+        font-size: 16px;
+    }
+
+    form{
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-template-rows: 24dvh 74dvh;
+    }
+    
+
+    section{
+        display: grid;
+        grid-template-columns:repeat(4, 1fr) ;
+        grid-template-rows:repeat(5, 1fr);
+        row-gap: 10px;
+        column-gap: 3px;
+        max-width: 90vw;
+        padding: 2vw;
+    }
+    
+    .button{
+    text-align: center;
+    border-radius: 10px;
+    background-color: rgb(227, 65, 89);
+    letter-spacing: 1.5px;
+    font-size: 15px;
+    transition: all .3s ease;
+    box-shadow: rgb(160, 37, 56) 0px 10px 0px 0px;
+    color: hsl(0, 0%, 100%);
+    cursor: pointer;
+    }
+
+.button:active {
+    background-color: rgb(227, 65, 89);
+    /*50, 168, 80*/
+    box-shadow: rgb(201, 46, 70) 0px 0px 0px 0px;
+    transform: translateY(5px);
+    transition: 200ms;
+}
+
+header{
+    display:flex;
+    justify-content:flex-end;
+    margin: 20px 0;
+    background-color: rgba(127, 255, 212, 0);
+    border:none;
+    max-width: 90vw;
+    padding: 2vw;
+    pointer-events: none;
+}
+header>input{
+    background-color: rgba(127, 255, 212, 0);
+    text-align: right;
+    border:none;
+    flex:1;
+    font-size:3rem;
+    max-width: 90vw;
+    padding: 2vw;
+}
+    @media only screen and (orientation:landscape) {
+        body{
+            background-color: rgb(70, 131, 180);
+        }
+        
+        header{
+            max-width: 55vw;
+            padding:0 22vw;
+        }
+        section{
+            max-width: 55vw;
+            padding:0 22vw;
+        }
+}
+
+</style>
+
+<script>
+    function nonNumbers() {
+        const operators = ['+', '-', '*', '/', '%', '.'];
+        let display = document.getElementsByName("display")[0];
+        let displayValue = display.value.toString();
+        let displayLength = displayValue.length;
+
+        if (operators.includes(displayValue[displayLength - 1]) && operators.includes(displayValue[displayLength - 2])) {
+            display.value = displayValue.slice(0, -1);
+        }
+    }
+    function calculateResult() {
+        let display = document.getElementsByName("display")[0];
+        let currentValue = display.value;
+        let result = eval(currentValue);
+
+        if (!isNaN(result)) {
+            // Round the result to three decimals
+            display.value = result.toFixed(3);
+        } else {
+            // Handle invalid input or division by zero
+            display.value = "Error";
+        }
+    }
+
+    function handleParentheses() {
+        let display2 = document.getElementsByName("display")[0];
+        let displayValue2 = display2.value.toString();
+
+        // Check if the last character is an operator or a number
+        if (!isNaN(displayValue2[displayValue2.length - 1]) || displayValue2[displayValue2.length - 1] === ')') {
+            // Add multiplication sign before an open parenthesis
+            updateDisplay(')');
+        } else {
+            // Add the corresponding parenthesis
+            updateDisplay('(');
+        }
+    }
+
+    function updateDisplay(value) {
+        let display = document.getElementsByName("display")[0];
+        display.value += value;
+    }
+</script>
+
+<body>
+    <form>
+        <header>
+            <input class="header" type="text" name="display">
+        </header>
+        <section>
+            <input id="ac" class="button" type="button" value="AC" onclick="display.value='' ">
+            <input id="del" class="button" type="button" value="DEL" onclick="display.value=display.value.toString().slice(0,-1) ">
+            <input id="percent" class="button" type="button" value="%" onclick="display.value+='%'; nonNumbers(); ">
+            <input id="divide" class="button" type="button" value="/" onclick="display.value+='/'; nonNumbers(); ">
+            <input id="a7" class="button" type="button" value="7" onclick="display.value+='7' ">
+            <input id="a8" class="button" type="button" value="8" onclick="display.value+='8' ">
+            <input id="a9" class="button" type="button" value="9" onclick="display.value+='9' ">
+            <input id="multiply" class="button" type="button" value="*" onclick="display.value+='*'; nonNumbers(); ">
+            <input id="a4" class="button" type="button" value="4" onclick="display.value+='4' ">
+            <input id="a5" class="button" type="button" value="5" onclick="display.value+='5' ">
+            <input id="a6" class="button" type="button" value="6" onclick="display.value+='6' ">
+            <input id="subtract" class="button" type="button" value="-" onclick="display.value+='-'; nonNumbers(); ">
+            <input id="a1" class="button" type="button" value="1" onclick="display.value+='1' ">
+            <input id="a2" class="button" type="button" value="2" onclick="display.value+='2' ">
+            <input id="a3" class="button" type="button" value="3" onclick="display.value+='3' ">
+            <input id="addition" class="button" type="button" value="+" onclick="display.value+='+'; nonNumbers();">
+            <input id="a0" class="button" type="button" value="0" onclick="display.value+='0' ">
+            <input id="point" class="button" type="button" value="." onclick="display.value+='.'; nonNumbers();">
+            <input id="parantheses" class="button" type="button" value="()" onclick="handleParentheses()">
+            <input id="equal" class="button" type="button" value="=" onclick="display.value=eval(display.value), calculateResult()">
+        </form>
+    </section>
+</body>
+</html>

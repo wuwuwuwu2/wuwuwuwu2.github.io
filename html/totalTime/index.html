@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Total time</title>
+    <script>
+
+        //my birthday
+        function birthday(){
+        const prevTime = new Date(2003, 6, 20, 13, 30, 10);
+        //const prevTime = new Date(1058697000000);
+
+        document.getElementById("btd").innerHTML = prevTime.getDate;
+        }
+
+        //today's date
+        var today = new Date();
+        var dd = String(today.getDate()).padStart(2, '0');
+        var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+        var yyyy = today.getFullYear();
+
+        //real-time clock
+        function startTime() {
+            const today = new Date();
+            let h = today.getHours();
+            let m = today.getMinutes();
+            let s = today.getSeconds();
+            m = checkTime(m);
+            s = checkTime(s);
+            let currentTime = new Date();
+        document.getElementById('txt').innerHTML =  h + ":" + m + ":" + s;
+        setTimeout(startTime, 1000);
+        }
+
+        // add zero in front of numbers < 10
+        function checkTime(i) {
+            if (i < 10) {i = "0" + i};
+            return i;
+    }
+    </script>
+</head>
+<body onload="startTime()">
+    <div id="txt"></div>
+    <br><br><br>
+    <div><p>wjnvo</p></div>
+    <br><br><br>
+    <div id="btd" onload="birthday()"></div>
+</body>
+</html>

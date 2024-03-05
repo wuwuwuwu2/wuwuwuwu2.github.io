@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nintendo Switch</title>
+    <style>
+        body{
+            background-color: aquamarine;
+            display:flex;
+            justify-content: center;
+            padding:44dvh 0;
+        }
+
+        .joycon{
+            background-color: brown;
+            width:8vw;
+            height:10dvh;
+        }
+
+        .joycon:active{
+            transform: translateY(-25dvh);
+            transition:600ms;
+        }
+
+        .console{
+            background-color: bisque;
+            width: 24vw;
+            height: 10dvh;
+        }
+    </style>
+</head>
+<body>
+    <a class="joycon"></a>
+    <a class="console"></a>
+    <a class="joycon"></a>
+</body>
+</html>
